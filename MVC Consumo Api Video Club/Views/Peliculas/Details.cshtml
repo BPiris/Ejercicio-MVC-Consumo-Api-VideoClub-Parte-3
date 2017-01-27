@@ -1,0 +1,65 @@
+﻿@model MVC_Consumo_Api_Video_Club.Models.PeliculasModel
+<h2 style="text-align: center">Detalle de la Película</h2>
+
+<div>
+    <hr />
+    <p style="text-align: center; padding: 0; margin: 0">
+        @Html.ActionLink("Editar", "Edit", new { id = Model.idPelicula })
+    </p>
+    <div style="min-height: 150px;">
+        <dl class="col-md-4 dl-horizontal"></dl>
+        <dl class="col-md-4 dl-horizontal">
+            <dt>
+                @Html.DisplayName("Nombre de la Película:")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.nombrePelicula)
+            </dd>
+
+            <dt>
+                @Html.DisplayName("Año:")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.anoPelicula)
+            </dd>
+
+            <dt>
+                @Html.DisplayName("Formato:")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.formatoPelicula)
+            </dd>
+
+            <dt>
+                @Html.DisplayName("Descripción:")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+
+            <dt>
+                @Html.DisplayName("En prestamo:")
+            </dt>
+
+            <dd>
+                @(Model.idCliente != null ? "Si" : "No")
+            </dd>
+        </dl>
+        <dl class="col-md-4 dl-horizontal"></dl>
+
+    </div>
+</div>
+
+
+
+@Html.Partial("_ActoresPartial", Model.ActoresPelicula)
+
+<p style="text-align: right">
+    @Html.ActionLink("Volver al listado", "Index")
+</p>
+
+

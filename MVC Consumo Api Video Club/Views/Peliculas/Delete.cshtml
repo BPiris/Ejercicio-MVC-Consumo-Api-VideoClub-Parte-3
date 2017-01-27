@@ -1,0 +1,60 @@
+﻿@model MVC_Consumo_Api_Video_Club.Models.PeliculasModel
+
+<h2>Borrado de Película</h2>
+
+<h3 style="text-align: center">¿Estás seguro que quieres eliminar esta película?</h3>
+<div>
+    @{
+        if (Model.idCliente != null)
+        {
+            <h4 style="text-align: center; color: red">Atención esta pelicula se encuentra en prestamo y no puede ser borrada</h4>
+        }
+    }
+    <hr />
+    <dl class="dl-horizontal">
+        
+        <input type="hidden" id="idPelicula" name="idPelicula" value="@Model.idPelicula"/>
+        <input type="hidden" id="idCliente" name="idCliente" value="@Model.idCliente"/>
+
+        <dt>
+            @Html.DisplayName("Nombre de la Pelicula:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombrePelicula)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Año:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.anoPelicula)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Formato:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.formatoPelicula)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Descripción;")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Volver al listado", "Index")
+        </div>
+    }
+</div>

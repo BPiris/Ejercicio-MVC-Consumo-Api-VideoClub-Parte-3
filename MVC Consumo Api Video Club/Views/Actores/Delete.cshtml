@@ -1,0 +1,36 @@
+﻿@model MVC_Consumo_Api_Video_Club.Models.ActoresModel
+
+<h3>¿Estás seguro que quieres borrar el actor?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        
+        <input type="hidden" id="idActores" name="idActores" value="@Model.idActores"/>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.apellidos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apellidos)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Volver al listado", "Index")
+        </div>
+    }
+</div>

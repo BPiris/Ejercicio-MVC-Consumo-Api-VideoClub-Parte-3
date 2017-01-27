@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MVC_Consumo_Api_Video_Club.Models.PeliculasModel>
+
+<h2 style="text-align: center">Listado de Películas</h2>
+
+<p>
+    @Html.ActionLink("Crear Nueva Entrada de Pelicula", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Nombre Pelicula:")
+        </th>
+        <th>
+            @Html.DisplayName("Año")
+        </th>
+        <th>
+            @Html.DisplayName("Formato")
+        </th>
+        <th>
+            @Html.DisplayName("Descripción")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombrePelicula)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.anoPelicula)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.formatoPelicula)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.idPelicula }) |
+            @Html.ActionLink("Detalles", "Details", new { id = item.idPelicula }) |
+            @Html.ActionLink("Borrado", "Delete", new { id = item.idPelicula })
+        </td>
+    </tr>
+}
+
+</table>

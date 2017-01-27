@@ -1,0 +1,35 @@
+﻿@model IEnumerable<MVC_Consumo_Api_Video_Club.Models.ActoresModel>
+
+<h2 style="text-align: center">Listado de Actores</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Nombre")
+        </th>
+        <th>
+            @Html.DisplayName("Apellidos")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.apellidos)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.idActores }) |
+            @Html.ActionLink("Detalles", "Details", new { id = item.idActores }) |
+            @Html.ActionLink("Borrado", "Delete", new { id = item.idActores })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,45 @@
+﻿@model MVC_Consumo_Api_Video_Club.Models.ActoresModel
+<h2 style="text-align: center">@(Model.idPelicula != 0 ? "Detalle del Actor de la Película" : "Detalle del Actor")</h2>
+
+<div>
+    <hr />
+    <div style="min-height: 75px;">
+        <dl class="col-md-4 dl-horizontal"></dl>
+        <dl class="col-md-4 dl-horizontal">
+            <dt>
+                @Html.DisplayName("Nombre del Actor")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.nombre)
+            </dd>
+
+            <dt>
+                @Html.DisplayName("Apellidos del Actor")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.apellidos)
+            </dd>
+            @if (Model.idPelicula != 0)
+            {
+                <dt>@Html.DisplayName("Sueldo")</dt>
+                <dd>@Html.DisplayFor(model => model.SueldoActorEnPelicula)</dd>
+            }
+
+        </dl>
+        <dl class="col-md-4 dl-horizontal"></dl>
+
+    </div>
+</div>
+<p style="text-align: right">
+    @{
+        if (Model.idPelicula != 0)
+        {
+            @Html.ActionLink("Volver al detalle", "Details", "Peliculas", new { id = Model.idPelicula }, null)
+        }
+        else
+        {
+            @Html.ActionLink("Volver al listado", "Index")
+        }
+    }</p>
