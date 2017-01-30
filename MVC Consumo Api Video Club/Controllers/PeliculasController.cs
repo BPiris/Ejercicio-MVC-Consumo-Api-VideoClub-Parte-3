@@ -10,7 +10,7 @@ using MVC_Consumo_Api_Video_Club.Servicios;
 
 namespace MVC_Consumo_Api_Video_Club.Controllers
 {
-    public class PeliculasController : Controller
+    public class PeliculasController : BaseController
     {
         [Dependency]
         public Servicios<PeliculasModel> _Peliculas { get; set; }

@@ -10,7 +10,7 @@ using MVC_Consumo_Api_Video_Club.Servicios;
 
 namespace MVC_Consumo_Api_Video_Club.Controllers
 {
-    public class ActoresController : Controller
+    public class ActoresController : BaseController
     {
         [Dependency]
         public Servicios<ActoresModel> _Actores { get; set; }
@@ -99,19 +99,5 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
             return View(_Actores.Get(id));
         }
 
-        // POST: Actores/Delete/5
-        [HttpPost]
-        public async Task<ActionResult> Delete(int id, ActoresModel collection)
-        {
-            try
-            {
-                await _Actores.Delete(collection.idActores);
-            }
-            catch
-            {
-
-            }
-            return RedirectToAction("Index");
-        }
     }
 }

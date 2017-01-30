@@ -1,0 +1,39 @@
+﻿@model MVC_Consumo_Api_Video_Club.Models.ClientesModel
+
+<h2>Borrar Cliente</h2>
+
+<h3>¿Estás seguro que deseas borrar el cliente?</h3>
+<div>
+    <h4>ClientesModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <input type="hidden" id="idCliente" name="idCliente" value="@Model.idCliente" />
+
+        <dt>
+            @Html.DisplayName("Nombre Cliente:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombreCliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Apellidos Cliente:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apellidosCliente)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Volver al listado", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,77 @@
+﻿@model MVC_Consumo_Api_Video_Club.Models.ClientesModel
+
+<h2>Ver detalles del Cliente</h2>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayName("Nombre del cliente:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombreCliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Apellidos del cliente")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apellidosCliente)
+        </dd>
+
+    </dl>
+</div>
+
+<hr />
+
+<div>
+    <h3>Películas alquiladas por el cliente</h3>
+
+    @if (Model.PeliculasCliente.Count > 0)
+    {
+        <dl class="dl-horizontal">
+            @foreach (var item in Model.PeliculasCliente)
+            {
+                <dt>
+                    Nombre de la película:
+                </dt>
+
+                <dd>
+                    @item.nombrePelicula | <a href="/Clientes/DevolverPeliculas?idPeliculaDevolver=@item.idPelicula"> Devolver Pelicula</a>
+                </dd>
+            }
+
+        </dl>
+    }
+    else
+    {
+        <div>
+            <p>Sin películas alquiladas en estos momentos</p>
+        </div>
+    }
+</div>
+
+<hr />
+
+<div>
+    @using (Html.BeginForm("AlquilarPeliculas", "Clientes", FormMethod.Post))
+    {
+        <h3>Alquilar pelicula por cliente</h3>
+        @Html.DropDownListFor(o => o.idPeliculaAlquiler, ViewBag.ListadoLibres as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        <input type="hidden" id="idCliente" name="idCliente" value="@Model.idCliente" />
+        <input type="submit" value="Alquilar Pelicula" style="margin-top: 5px;" class="form-control btn-danger"/>
+    }
+</div>
+
+<hr />
+
+<div>
+    <p>
+        @Html.ActionLink("Editar", "Edit", new { id = Model.idCliente }) |
+        @Html.ActionLink("Volver a la lista", "Index")
+    </p>
+</div>

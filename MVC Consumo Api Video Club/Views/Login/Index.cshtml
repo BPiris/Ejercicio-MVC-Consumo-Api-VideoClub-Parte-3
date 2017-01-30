@@ -1,0 +1,42 @@
+﻿
+
+@{
+    Layout = "~/Views/Shared/Layouts/_LoginLayout.cshtml";
+}
+
+<div style="text-align: center; margin-top: 100px;">
+    <div style="margin-bottom: 5px;">
+        <a href="">
+            @*<img src="~/Content/logo_ok.png" alt="logo" />*@
+        </a>
+    </div>
+
+    @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "form-inline", id = "formEntrarLogin" }))
+    {
+        <div style="display: inline-block; border: blue dashed 1px; padding: 30px;">
+            <div class="control-group" style="margin: 3px;">
+                <div class="input-append">
+                    <input type="text" id="nombreUsuario" placeholder="Nombre de usuario.." name="nombreUsuario" class="form-control">
+                    <span class="add-on"><i class="icon-envelope-alt"></i></span>
+                </div>
+            </div>
+            <div class="control-group" style="margin: 3px;">
+                <div class="input-append">
+                    <input type="password" id="passwordUsuario" name="passwordUsuario" placeholder="Password.." class="form-control">
+                    <span class="add-on"><i class="icon-asterisk"></i></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="btn-group" style="margin: 3px;">
+                    <button id="btnEntrarLogin" class="btn btn-small btn-success" value="Iniciar sesión"><i class="icon-arrow-right"></i>  OK  </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div id="login-buttons" style="position: relative; top: -35px;">
+        <h3 class="page-header-sub"><span class="label label-default">Inicio de sesión</span></h3>
+    </div>
+
+</div>
+

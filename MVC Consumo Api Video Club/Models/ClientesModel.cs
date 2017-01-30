@@ -13,5 +13,7 @@ namespace MVC_Consumo_Api_Video_Club.Models
 
         //Externas al Modelo
         public List<PeliculasModel> PeliculasCliente { get; set; }
+
+        public int idPeliculaAlquiler { get; set; }
     }
 }
