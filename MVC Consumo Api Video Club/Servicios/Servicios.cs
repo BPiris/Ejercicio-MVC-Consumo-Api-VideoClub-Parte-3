@@ -33,7 +33,7 @@ namespace MVC_Consumo_Api_Video_Club.Servicios
 
             using (var handle = new HttpClientHandler())
             {
-                handle.Credentials = new NetworkCredential(user, Cifrado.GetSHA1(pass));
+                handle.Credentials = new NetworkCredential(user, pass);            
 
                 using (var client = new HttpClient(handle))
                 {
@@ -49,7 +49,7 @@ namespace MVC_Consumo_Api_Video_Club.Servicios
         {
             using (var handler = new HttpClientHandler())
             {
-                handler.Credentials = new NetworkCredential(user, Cifrado.GetSHA1(pass));
+                handler.Credentials = new NetworkCredential(user, pass);
 
                 using (var client = new HttpClient(handler))
                 {
@@ -155,10 +155,13 @@ namespace MVC_Consumo_Api_Video_Club.Servicios
             var serializado = Serializacion<TModel>.Serializar(modelo);
             using (var handler = new HttpClientHandler())
             {
-                handler.Credentials = new NetworkCredential(user, Cifrado.GetSHA1(pass));
+                handler.Credentials = new NetworkCredential(user, pass);
 
                 using (var client = new HttpClient(handler))
                 {
+                    //String encoded = Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(user + ":" + pass));
+                    //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",encoded);
+
                     var contenido = new StringContent(serializado);
 
                     contenido.Headers.ContentType = new MediaTypeHeaderValue("application/json");
