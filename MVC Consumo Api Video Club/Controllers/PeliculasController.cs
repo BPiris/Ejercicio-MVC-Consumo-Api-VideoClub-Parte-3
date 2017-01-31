@@ -18,14 +18,16 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
         // GET: Peliculas
         public ActionResult Index()
         {
-            return View(_Peliculas.Get());
+            ViewBag.desplegableAno = new SelectList(ObtenerListadoAnos(), "idAno", "ano");            
+
+            return View(Session["listaTemporal"] == null ? _Peliculas.Get((String)Session["usuarioLogin"], (String)Session["passLogin"]) : Session["listaTemporal"] as List<PeliculasModel>);
         }
 
         // GET: Peliculas/Details/5
         public ActionResult Details(int id)
         {
             Session["idPelicula"] = id;
-            return View(_Peliculas.Get(id));
+            return View(_Peliculas.Get(id, (String)Session["usuarioLogin"], (String)Session["passLogin"]));
         }
 
         // GET: Peliculas/Create
@@ -47,7 +49,7 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
 
             try
             {
-                await _Peliculas.Add(collection);
+                await _Peliculas.Add(collection, (String)Session["usuarioLogin"], (String)Session["passLogin"]);
                 Session["PeliculaCreada"] = null;
             }
             catch
@@ -61,7 +63,7 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
         // GET: Peliculas/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(_Peliculas.Get(id));
+            return View(_Peliculas.Get(id, (String)Session["usuarioLogin"], (String)Session["passLogin"]));
         }
 
         // POST: Peliculas/Edit/5
@@ -70,7 +72,7 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
         {
             try
             {
-                await _Peliculas.Update(collection);
+                await _Peliculas.Update(collection, (String)Session["usuarioLogin"], (String)Session["passLogin"]);
             }
             catch
             {
@@ -82,7 +84,7 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
         // GET: Peliculas/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(_Peliculas.Get(id));
+            return View(_Peliculas.Get(id, (String)Session["usuarioLogin"], (String)Session["passLogin"]));
         }
 
         // POST: Peliculas/Delete/5
@@ -91,12 +93,20 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
         {
             try
             {
-                await _Peliculas.Delete(collection.idPelicula);
+                await _Peliculas.Delete(collection.idPelicula, (String)Session["usuarioLogin"], (String)Session["passLogin"]);
             }
             catch
             {
 
             }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult BuscarEnPeliculas(String txtBusquedaPelicula, int? idAno)
+        {
+            var miDic = new Dictionary<String,String>() { { "txtBusquedaPelicula", txtBusquedaPelicula }, { "anoPelicula", idAno.ToString()} };
+            Session["listaTemporal"] = _Peliculas.Get(miDic, (String)Session["usuarioLogin"], (String)Session["passLogin"]);
             return RedirectToAction("Index");
         }
     }

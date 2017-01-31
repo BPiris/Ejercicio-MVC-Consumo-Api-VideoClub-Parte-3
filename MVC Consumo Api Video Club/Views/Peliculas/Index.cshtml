@@ -2,6 +2,31 @@
 
 <h2 style="text-align: center">Listado de Películas</h2>
 
+<div class="row" style="margin: 20px;">
+    <div class="col-md-8">
+        @using (Html.BeginForm("BuscarEnPeliculas", "Peliculas", FormMethod.Post, new { @class = "form-inline" }))
+        {
+            <div class="row">
+                <div class="form-group col-md-9">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">Buscar Película</button>
+                        </span>
+                        <input type="text" class="form-control" id="txtBusquedaPelicula" name="txtBusquedaPelicula">
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <div class="input-group">
+                        @Html.DropDownList("idAno", ViewBag.desplegableAno as SelectList, "Puede seleccionar un año", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+
+</div>
+
 <p>
     @Html.ActionLink("Crear Nueva Entrada de Pelicula", "Create")
 </p>
@@ -22,26 +47,31 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.nombrePelicula)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.anoPelicula)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.formatoPelicula)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descripcion)
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.idPelicula }) |
-            @Html.ActionLink("Detalles", "Details", new { id = item.idPelicula }) |
-            @Html.ActionLink("Borrado", "Delete", new { id = item.idPelicula })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombrePelicula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.anoPelicula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.formatoPelicula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.idPelicula }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.idPelicula }) |
+                @Html.ActionLink("Borrado", "Delete", new { id = item.idPelicula })
+            </td>
+        </tr>
+    }
 
 </table>
+
+@{
+    Session["listaTemporal"] = null;
+}

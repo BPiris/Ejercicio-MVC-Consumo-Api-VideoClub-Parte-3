@@ -21,18 +21,18 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
         // GET: Clientes
         public ActionResult Index()
         {
-            return View(_Clientes.Get());
+            return View(_Clientes.Get((String)Session["usuarioLogin"], (String)Session["passLogin"]));
         }
 
         // GET: Clientes/Details/5
         public ActionResult Details(int id)
         {
             var miDic = new Dictionary<String,String>() { {"peliculasSinALquilar", true.ToString()} };
-            var peliculasLibre = _Peliculas.Get(miDic);
+            var peliculasLibre = _Peliculas.Get(miDic, (String)Session["usuarioLogin"], (String)Session["passLogin"]);
 
             ViewBag.ListadoLibres = new SelectList(peliculasLibre, "idPelicula", "nombrePelicula");
 
-            return View(_Clientes.Get(id));
+            return View(_Clientes.Get(id, (String)Session["usuarioLogin"], (String)Session["passLogin"]));
         }
 
         // GET: Clientes/Create
@@ -47,7 +47,7 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
         {
             try
             {
-                await _Clientes.Add(cliente);
+                await _Clientes.Add(cliente, (String)Session["usuarioLogin"], (String)Session["passLogin"]);
 
                 return RedirectToAction("Index");
             }
@@ -60,7 +60,7 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
         // GET: Clientes/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(_Clientes.Get(id));
+            return View(_Clientes.Get(id, (String)Session["usuarioLogin"], (String)Session["passLogin"]));
         }
 
         // POST: Clientes/Edit/5
@@ -69,7 +69,7 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
         {
             try
             {
-                await _Clientes.Update(editarCliente);
+                await _Clientes.Update(editarCliente, (String)Session["usuarioLogin"], (String)Session["passLogin"]);
 
                 return RedirectToAction("Index");
             }
@@ -82,15 +82,15 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
         // GET: Clientes/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(_Clientes.Delete(id));
+            return View(_Clientes.Delete(id, (String)Session["usuarioLogin"], (String)Session["passLogin"]));
         }
 
         public async Task<ActionResult> DevolverPeliculas(int idPeliculaDevolver)
         {
-            var peliculaTemp = _Peliculas.Get(idPeliculaDevolver);
+            var peliculaTemp = _Peliculas.Get(idPeliculaDevolver, (String)Session["usuarioLogin"], (String)Session["passLogin"]);
             var clienteTemp = (int)peliculaTemp.idCliente;
             peliculaTemp.idCliente = null;
-            await _Peliculas.Update(peliculaTemp);
+            await _Peliculas.Update(peliculaTemp, (String)Session["usuarioLogin"], (String)Session["passLogin"]);
 
             return RedirectToAction("Details",new {id=clienteTemp});
         }
@@ -101,9 +101,9 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
             int idPeliculaAlquiler = Convert.ToInt32(coleccion["idPeliculaAlquiler"]);
 
 
-            var peliculaTemp = _Peliculas.Get(idPeliculaAlquiler);
+            var peliculaTemp = _Peliculas.Get(idPeliculaAlquiler, (String)Session["usuarioLogin"], (String)Session["passLogin"]);
             peliculaTemp.idCliente = idCliente;
-            await _Peliculas.Update(peliculaTemp);
+            await _Peliculas.Update(peliculaTemp, (String)Session["usuarioLogin"], (String)Session["passLogin"]);
 
             return RedirectToAction("Details", new { id = idCliente });
         }

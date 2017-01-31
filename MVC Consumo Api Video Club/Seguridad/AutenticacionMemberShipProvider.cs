@@ -1,13 +1,21 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using MVC_Consumo_Api_Video_Club.App_Start;
+using MVC_Consumo_Api_Video_Club.Models;
+using MVC_Consumo_Api_Video_Club.Servicios;
 
 namespace MVC_Consumo_Api_Video_Club.Seguridad
 {
     public class AutenticacionMemberShipProvider:MembershipProvider
     {
+
+        [Dependency]
+        public Servicios<UsuarioModel> _Usuarios { get; set; }
+
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer,
             bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {
@@ -42,9 +50,14 @@ namespace MVC_Consumo_Api_Video_Club.Seguridad
 
         public override bool ValidateUser(string username, string password)
         {
-            //
-            return true;
-            //
+            var miDic = new Dictionary<String,String>() { { "username", username}, { "password", password} };
+
+            UnityWebActivator.Start();
+
+            var usuarioTemp = _Usuarios.Get(miDic);
+
+            return usuarioTemp.Any();
+
         }
 
         public override bool UnlockUser(string userName)

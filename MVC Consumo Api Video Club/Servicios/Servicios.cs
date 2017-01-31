@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
+using MVC_Consumo_Api_Video_Club.Seguridad;
 using MVC_Consumo_Api_Video_Club.Utilidades;
 
 namespace MVC_Consumo_Api_Video_Club.Servicios
@@ -26,12 +27,14 @@ namespace MVC_Consumo_Api_Video_Club.Servicios
             UrlBase = url;
         }
 
-        public async Task Add(TModel modelo)
+        public async Task Add(TModel modelo, String user, String pass)
         {
             var serializado = Serializacion<TModel>.Serializar(modelo);
 
             using (var handle = new HttpClientHandler())
             {
+                handle.Credentials = new NetworkCredential(user, Cifrado.GetSHA1(pass));
+
                 using (var client = new HttpClient(handle))
                 {
                     var contenido = new StringContent(serializado);
@@ -42,10 +45,12 @@ namespace MVC_Consumo_Api_Video_Club.Servicios
             }
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(int id, String user, String pass)
         {
             using (var handler = new HttpClientHandler())
             {
+                handler.Credentials = new NetworkCredential(user, Cifrado.GetSHA1(pass));
+
                 using (var client = new HttpClient(handler))
                 {
                     var res = await client.DeleteAsync(new Uri(UrlBase + "/" + id));
@@ -61,11 +66,14 @@ namespace MVC_Consumo_Api_Video_Club.Servicios
             }
         }
 
-        public List<TModel> Get()
+        public List<TModel> Get(String user, String pass)
         {
             List<TModel> lista;
             var peticion = WebRequest.Create(UrlBase);
             peticion.Method = "GET";
+
+            String encoded = Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(user + ":" + pass));
+            peticion.Headers.Add("Authorization", "Basic " + encoded);
 
             var res = peticion.GetResponse();
 
@@ -81,7 +89,7 @@ namespace MVC_Consumo_Api_Video_Club.Servicios
             return lista;
         }
 
-        public List<TModel> Get(Dictionary<string, string> args)
+        public List<TModel> Get(Dictionary<string, string> args, String user, String pass)
         {
             var argumentos = "?";
             var n = args.Count;
@@ -103,6 +111,10 @@ namespace MVC_Consumo_Api_Video_Club.Servicios
             var cl = WebRequest.Create(UrlBase + argumentos);
 
             cl.Method = "GET";
+            
+            String encoded = Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(user + ":" + pass));
+            cl.Headers.Add("Authorization", "Basic " + encoded);
+            
             var res = cl.GetResponse();
             using (var stream = res.GetResponseStream())
             {
@@ -115,13 +127,17 @@ namespace MVC_Consumo_Api_Video_Club.Servicios
             return lista;
         }
 
-        public TModel Get(int id)
+        public TModel Get(int id, String user, String pass)
         {
             TModel lista;
 
             var cl = WebRequest.Create(UrlBase + "/" + id);
 
             cl.Method = "GET";
+
+            String encoded = Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(user + ":" + pass));
+            cl.Headers.Add("Authorization", "Basic " + encoded);
+
             var res = cl.GetResponse();
             using (var stream = res.GetResponseStream())
             {
@@ -134,11 +150,13 @@ namespace MVC_Consumo_Api_Video_Club.Servicios
             return lista;
         }
 
-        public async Task Update(TModel modelo)
+        public async Task Update(TModel modelo, String user, String pass)
         {
             var serializado = Serializacion<TModel>.Serializar(modelo);
             using (var handler = new HttpClientHandler())
             {
+                handler.Credentials = new NetworkCredential(user, Cifrado.GetSHA1(pass));
+
                 using (var client = new HttpClient(handler))
                 {
                     var contenido = new StringContent(serializado);

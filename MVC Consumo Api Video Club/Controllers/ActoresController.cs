@@ -17,13 +17,13 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
         // GET: Actores
         public ActionResult Index()
         {
-            return View(_Actores.Get());
+            return View(_Actores.Get((String)Session["usuarioLogin"], (String)Session["passLogin"]));
         }
 
         // GET: Actores/Details/5
         public ActionResult Details(int id, int? idPelicula, int? sueldo)
         {
-            var actor = _Actores.Get(id);
+            var actor = _Actores.Get(id, (String)Session["usuarioLogin"], (String)Session["passLogin"]);
 
             if (idPelicula != null)
                 actor.idPelicula = (int)idPelicula;
@@ -55,7 +55,7 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
 
             try
             {
-                await _Actores.Add(collection);
+                await _Actores.Add(collection, (String)Session["usuarioLogin"], (String)Session["passLogin"]);
                 Session["ActorCreado"] = null;
             }
             catch
@@ -68,7 +68,7 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
         // GET: Actores/Edit/5
         public ActionResult Edit(int id, int? idPelicula, int? sueldo)
         {
-            var actor = _Actores.Get(id);
+            var actor = _Actores.Get(id, (String)Session["usuarioLogin"], (String)Session["passLogin"]);
 
             if (idPelicula != null) 
                 actor.idPelicula = (int)idPelicula;
@@ -84,7 +84,7 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
         {
             try
             {
-                await _Actores.Update(collection);
+                await _Actores.Update(collection, (String)Session["usuarioLogin"], (String)Session["passLogin"]);
             }
             catch
             {
@@ -96,7 +96,7 @@ namespace MVC_Consumo_Api_Video_Club.Controllers
         // GET: Actores/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(_Actores.Get(id));
+            return View(_Actores.Get(id, (String)Session["usuarioLogin"], (String)Session["passLogin"]));
         }
 
     }

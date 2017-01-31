@@ -45,6 +45,7 @@ namespace MVC_Consumo_Api_Video_Club.App_Start
             container.RegisterType<IServicios<PeliculasModel>, Servicios<PeliculasModel>>(new InjectionConstructor(urlBase + "Peliculas"));
             container.RegisterType<IServicios<ClientesModel>,Servicios<ClientesModel>>(new InjectionConstructor(urlBase + "Clientes"));
             container.RegisterType<IServicios<ActoresModel>, Servicios<ActoresModel>>(new InjectionConstructor(urlBase + "Actores"));
+            container.RegisterType<IServicios<UsuarioModel>,Servicios<UsuarioModel>>(new InjectionConstructor(urlBase + "Usuarios"));
 
         }
     }
