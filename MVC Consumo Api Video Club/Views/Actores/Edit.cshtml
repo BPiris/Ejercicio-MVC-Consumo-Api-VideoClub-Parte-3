@@ -10,6 +10,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         
         <input type="hidden" id="idPelicula" name="idPelicula" value="@Model.idPelicula"/>
+        <input type="hidden" id="idActores" name="idActores" value="@Model.idActores"/>
 
         <div class="form-group">
             @Html.Label("Nombre del Actor", htmlAttributes: new { @class = "control-label col-md-2" })
